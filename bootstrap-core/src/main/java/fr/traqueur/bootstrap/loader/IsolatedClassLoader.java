@@ -31,9 +31,9 @@ public class IsolatedClassLoader extends URLClassLoader {
         "fr.traqueur.bootstrap.config.",
         "fr.traqueur.bootstrap.loader.",
         "fr.traqueur.bootstrap.resolver.",
-        "fr.traqueur.bootstrap.DynamicApplication",
-        "fr.traqueur.bootstrap.DynamicEntrypoint",
-        "fr.traqueur.bootstrap.DynamicLoader"
+        "fr.traqueur.bootstrap.BootstrapApplication",
+        "fr.traqueur.bootstrap.BootstrapEntrypoint",
+        "fr.traqueur.bootstrap.BootstrapLoader"
     };
 
     /**
