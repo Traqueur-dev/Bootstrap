@@ -29,7 +29,7 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("dynamicLoader") {
+        create("bootstrapLoader") {
             id = "fr.traqueur.bootstrap"
             implementationClass = "fr.traqueur.bootstrap.gradle.BootstrapLoaderPlugin"
             displayName = "Dynamic Loader Plugin"

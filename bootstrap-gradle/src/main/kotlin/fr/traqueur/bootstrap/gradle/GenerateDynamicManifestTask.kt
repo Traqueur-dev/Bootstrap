@@ -99,7 +99,7 @@ abstract class GenerateDynamicManifestTask : DefaultTask() {
         val metaInfDir = File(outputDir, "META-INF")
         metaInfDir.mkdirs()
 
-        val manifestFile = File(metaInfDir, "dynamic-dependencies.json")
+        val manifestFile = File(metaInfDir, "bootstrap-dependencies.json")
         manifestFile.writeText(json)
 
         logger.lifecycle("Generated dynamic dependencies manifest: ${manifestFile.absolutePath}")
