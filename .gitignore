@@ -5,7 +5,7 @@ out/
 bin/
 
 # Dynamic Loader cache
-.dynamic-loader/
+.bootstrap-loader/
 
 # IDE
 .idea/
