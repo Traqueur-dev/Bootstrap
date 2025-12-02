@@ -16,6 +16,11 @@ public class SimpleTransferListener extends AbstractTransferListener {
 
     private static final DecimalFormat FORMAT = new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
+    /**
+     * Creates a new SimpleTransferListener.
+     */
+    public SimpleTransferListener() {}
+
     @Override
     public void transferStarted(TransferEvent event) {
         TransferResource resource = event.getResource();

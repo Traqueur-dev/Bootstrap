@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
  * Represents the dependency manifest loaded from META-INF/dynamic-dependencies.json.
  * This class uses a minimal regex-based JSON parser to avoid external dependencies.
  *
+ * @param dependencies  the list of Maven coordinates for dependencies
+ * @param repositories  the list of Maven repository configurations
  * <p>Expected JSON format:</p>
  * <pre>{@code
  * {
@@ -78,6 +80,8 @@ public record DependencyManifest(List<String> dependencies, List<Repository> rep
 
     /**
      * Represents a Maven repository configuration.
+     * @param id  the repository identifier
+     * @param url the repository URL
      */
     public record Repository(String id, String url) {
     }
