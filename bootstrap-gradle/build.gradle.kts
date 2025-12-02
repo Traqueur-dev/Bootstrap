@@ -1,4 +1,5 @@
 import java.util.Locale
+import java.util.Properties
 
 plugins {
     `kotlin-dsl`
@@ -6,8 +7,15 @@ plugins {
     `maven-publish`
 }
 
-group = rootProject.group
-version = rootProject.version
+val parentPropsFile = file("../gradle.properties")
+val parentProps = Properties().apply {
+    if (parentPropsFile.exists()) {
+        parentPropsFile.inputStream().use { load(it) }
+    }
+}
+
+group = parentProps.getProperty("group")!!
+version = parentProps.getProperty("version")!!
 
 repositories {
     mavenCentral()

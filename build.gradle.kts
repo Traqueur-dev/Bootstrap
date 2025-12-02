@@ -15,7 +15,6 @@ subprojects {
 }
 
 tasks.register("publish") {
-    dependsOn(subprojects.mapNotNull { subproject ->
-        subproject.tasks.findByName("publish")
-    })
+    dependsOn(":bootstrap-core:publish")
+    dependsOn(gradle.includedBuild("bootstrap-gradle").task(":publish"))
 }
