@@ -36,8 +36,8 @@ dependencies {
 
     // Mark dependencies as dynamic
     // They will be available at compile time but NOT included in the JAR
-    dynamic("net.dv8tion:JDA:6.1.2")
-    dynamic("com.google.guava:guava:32.1.3-jre")
+    bootstrap("net.dv8tion:JDA:6.1.2")
+    bootstrap("com.google.guava:guava:32.1.3-jre")
 }
 ```
 
@@ -45,20 +45,16 @@ dependencies {
 
 **Main.java:**
 ```java
-import fr.traqueur.bootstrap.BootstrapLoader;
 
 public class Main {
     public static void main(String[] args) {
-        DynamicLoader.bootstrap(args, MyApp.class);
+        BootstrapLoader.bootstrap(args, MyApp.class);
     }
 }
 ```
 
 **MyApp.java:**
 ```java
-import fr.traqueur.bootstrap.BootstrapApplication;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 
 public class MyApp implements DynamicApplication {
     private JDA jda;  // You can use dynamic dependency types directly!
@@ -84,14 +80,14 @@ On first run, dependencies will be downloaded to `.dynamic-loader/cache/`.
 
 ### Build Time
 
-1. The Gradle plugin creates a `dynamic` configuration extending `compileOnly`
+1. The Gradle plugin creates a `boostrap` configuration extending `compileOnly`
 2. Dynamic dependencies are available during compilation
-3. A manifest file `META-INF/dynamic-dependencies.json` is generated
+3. A manifest file `META-INF/bootstrap-dependencies.json` is generated
 4. Dynamic dependencies are **excluded** from the JAR
 
 ### Runtime
 
-1. `DynamicLoader.bootstrap()` loads the manifest
+1. `BootstrapLoader.bootstrap()` loads the manifest
 2. Maven Resolver downloads dependencies and their transitive dependencies
 3. An **IsolatedClassLoader** (child-first) is created with the dependencies
 4. Your application class is loaded and instantiated via the isolated ClassLoader
@@ -113,7 +109,7 @@ This is crucial for allowing your application classes to reference types from dy
 For more control over initialization:
 
 ```java
-DynamicLoader.bootstrap(args, ctx -> {
+BootstrapLoader.bootstrap(args, ctx -> {
     MyApp app = ctx.create(MyApp.class);
 
     // Access the ClassLoader
@@ -132,10 +128,10 @@ Via system property or environment variable:
 
 ```bash
 # System property
-java -Ddynamicloader.cache.dir=/custom/cache -jar app.jar
+java -Dbootstraploader.cache.dir=/custom/cache -jar app.jar
 
 # Environment variable
-export DYNAMIC_LOADER_CACHE_DIR=/custom/cache
+export BOOTSTRAP_LOADER_CACHE_DIR=/custom/cache
 java -jar app.jar
 ```
 
@@ -159,9 +155,9 @@ These repositories are included in the generated manifest.
 ```
 Bootstrap/
 ├── bootstrap-core/               # Runtime library (Java 21)
-│   ├── DynamicLoader.java        # Main entry point
-│   ├── DynamicApplication.java   # Simple interface
-│   ├── DynamicEntrypoint.java    # Callback interface
+│   ├── BootstrapLoader.java        # Main entry point
+│   ├── BootstrapApplication.java   # Simple interface
+│   ├── BootstrapEntrypoint.java    # Callback interface
 │   ├── config/
 │   │   └── DependencyManifest.java   # JSON parser
 │   ├── loader/
@@ -172,8 +168,8 @@ Bootstrap/
 │       └── SimpleTransferListener.java
 │
 ├── bootstrap-gradle/             # Gradle plugin (Kotlin)
-│   ├── DynamicLoaderPlugin.kt
-│   ├── DynamicLoaderExtension.kt
+│   ├── BootstrapLoaderPlugin.kt
+│   ├── BootstrapLoaderExtension.kt
 │   └── GenerateDynamicManifestTask.kt
 │
 └── example/                      # Discord bot example
@@ -181,7 +177,7 @@ Bootstrap/
 
 ## Manifest Format
 
-**META-INF/dynamic-dependencies.json:**
+**META-INF/bootstrap-dependencies.json:**
 ```json
 {
   "dependencies": [
